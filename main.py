@@ -108,7 +108,7 @@ task = st.sidebar.selectbox("Choose a task", list(TASKS.keys()))
 def predict(user_input, topic, task):
     tokenizer, model = get_models()
     input_text = f"{topic} {TASKS[task]} {user_input}"
-    
+
     # Tokenize the input text
     input_tokens = tokenizer.encode(input_text, return_tensors="pt")
 
@@ -124,10 +124,7 @@ def predict(user_input, topic, task):
     # Ignore the input tokens in the output
     output = output[:, input_tokens.shape[-1]:]
 
-    # Decode the generated tokens
-    response = tokenizer.decode(output[0], skip_special_tokens=True)
-
-    return response
+    return tokenizer.decode(output[0], skip_special_tokens=True)
 
 def generate_answer():
     user_input = st.session_state.user_input
